@@ -1,0 +1,16 @@
+@mixin color {
+    --color-primary: #db4c3f;
+    --color-primary-hover: #e87768;
+    --color-primary-active: #b5322b;
+    --color-primary-text-hover: #e87768;
+    --color-primary-text: #db4c3f;
+    --color-primary-text-active: #b5322b;
+    --color-primary-bg: #fff4f0;
+    --color-primary-bg-hover: #fff1ed;
+    --color-primary-border: #ffcfc4;
+    --color-primary-border-hover: #f5a495;
+}
+
+:export {
+    @include color;
+}

@@ -1,0 +1,153 @@
+.item {
+    justify-content: flex-start !important;
+    padding: 12px 0 !important;
+    position: relative;
+
+    &:hover {
+        .btn {
+            opacity: 1;
+            :global {
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+.circle {
+    display: flex;
+    justify-content: center;
+    align-self: flex-start;
+    position: relative;
+    context: '';
+    margin: 4px 6px 0 0;
+    height: 16px;
+    width: 16px;
+    border: 1px solid #808080;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:hover {
+        .check {
+            opacity: 1;
+        }
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.date {
+    padding: 0;
+    max-width: 100px;
+
+    :global {
+        .ant-picker {
+            padding: 0;
+
+            .ant-picker-input {
+                display: flex;
+                flex-direction: row-reverse;
+
+                span {
+                    margin: 0 3px 0 0;
+                }
+            }
+        }
+    }
+}
+
+.check {
+    position: absolute;
+    align-self: center;
+    z-index: 1;
+    opacity: 0;
+}
+
+.actions {
+    position: absolute;
+    gap: 5px;
+    top: 16px;
+    right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: transparent !important;
+    box-shadow: none;
+    opacity: 0;
+}
+//
+// .open {
+//     opacity: 1;
+// }
+
+.editIcon {
+    color: #808080;
+
+   &:hover {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ededed;
+        border-radius: 3px;
+        height: 24px;
+        width: 24px;
+   }
+}
+
+:global {
+    .ant-popover .ant-popover-arrow {
+        width: 0;
+        height: 0;
+    }
+
+//     .ant-btn-default:not(:disabled):hover {
+//         color: transparent !important;
+//     }
+
+    .ant-btn-default {
+        border: transparent;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+//     .ant-btn.ant-btn-icon-only {
+// //         width: 22px;
+//         z-index: 50;
+//     }
+
+}
+
+.dueDate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+        .active {
+            display: flex;
+            align-items: center;
+            border: transparent;
+            color: var(--color-primary);
+            width: 16px;
+
+            > span > svg {
+                width: 13px;
+                height: 13px;
+            }
+        }
+
+        .title {
+            color: var(--color-primary);
+            font-size: 13px;
+        }
+
+}
+

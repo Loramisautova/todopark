@@ -1,0 +1,86 @@
+@import 'spacing.module.scss';
+@import 'color.module.scss';
+
+/* Обнуление */
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+ol,
+li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+h1 {
+    font-size: 114px;
+}
+
+h2 {
+    font-size: 48px;
+}
+
+h3 {
+    font-size: 36px;
+}
+
+h4 {
+    font-size: 24px;
+}
+
+h5 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: var(--space-l);
+}
+
+textarea, input, textarea:focus, input:focus {
+    outline: none;
+}
+
+.ant-input {
+    border-style: none;
+
+    &:hover, &:focus {
+        box-shadow: none;
+        border-style: none;
+    }
+}
+
+.ant-menu-dark.ant-menu-horizontal > .ant-menu-item-selected {
+    background-color: transparent;
+}
+
+.ant-btn {
+        &::after {
+            all: unset;
+        }
+    }
+
+:root {
+    @include spacing;
+    @include color;
+}

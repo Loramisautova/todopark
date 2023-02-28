@@ -1,0 +1,20 @@
+
+.content {
+    padding: 30px 16px 0;
+    background: #fafafa !important;
+}
+
+:global {
+    .ant-menu-light .ant-menu-item-selected {
+        background-color: #eeeeee;
+    }
+
+    .ant-menu .ant-menu-submenu-title {
+        border-radius: 5px;
+    }
+
+     .ant-menu .anticon > svg {
+            min-width: 16px !important;
+            min-height: 16px !important;
+        }
+}

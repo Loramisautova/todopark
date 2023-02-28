@@ -1,0 +1,33 @@
+.header {
+    background-color: var(--color-primary);
+}
+
+.layout {
+    margin: 0 auto;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-primary);
+
+        &:before {
+          display: none;
+        }
+
+        .item {
+            color: #ffffff;
+            max-width: 24px;
+            max-height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+              &:hover {
+                  background: var(--color-primary-hover);
+                  border-radius: 3px;
+                  height: 43px;
+              }
+        }
+}

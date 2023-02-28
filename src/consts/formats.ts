@@ -1,0 +1,2 @@
+export const DATE_SHORT_FORMAT = 'DD MMM';
+export const DATE_SHORT_REVERTED_FORMAT = 'MMM DD';

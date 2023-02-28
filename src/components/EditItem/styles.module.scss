@@ -1,0 +1,20 @@
+.title {
+    font-weight: 600;
+}
+
+.editor {
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    padding: 10px 10px 0;
+    cursor: text;
+}
+
+.focused {
+    border: 1px solid #999999;
+}
+
+.buttons {
+    display: flex;
+    gap: 12px !important;
+    justify-content: flex-end;
+}
