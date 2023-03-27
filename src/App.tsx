@@ -8,16 +8,27 @@ import './styles/global.scss';
 import { MainPage } from './pages/MainPage';
 import { InboxPage } from './pages/InboxPage';
 
+import { TodoLayout } from './layout';
+import { GlobalProvider } from './GlobalProvider';
+
+import { APP_ROUTES } from './router/routes';
+
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <MainPage />,
+        element: <TodoLayout />,
         // errorElement: <ErrorPage />,
+        children: [
+            {
+                path: APP_ROUTES.default.path,
+                element: <MainPage />
+            },
+            {
+                path: APP_ROUTES.inbox.path,
+                element: <InboxPage />
+            }
+        ]
     },
-    {
-        path: '/inbox',
-        element: <InboxPage />,
-    }
 ]);
 
 function App() {
@@ -30,7 +41,9 @@ function App() {
           }}
       >
           <Layout className="layout">
-              <RouterProvider router={router} />
+              <GlobalProvider>
+                  <RouterProvider router={router} />
+              </GlobalProvider>
           </Layout>
       </ConfigProvider>
   );

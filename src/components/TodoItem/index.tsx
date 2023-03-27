@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { DATE_SHORT_REVERTED_FORMAT } from '../../consts/formats';
 
-import { TodoItem } from '../../types';
+import { TodoItemGlobal } from '../../types';
 import { MyGlobalContext } from '../../context';
 import { formatDate } from '../../utils/dates';
 
@@ -15,7 +15,7 @@ import { CalendarPopover } from '../CalendarPopover';
 import styles from './styles.module.scss';
 
 type Props = {
-    item: TodoItem;
+    item: TodoItemGlobal;
     isEditMode?: boolean;
     onEditToggle?: (id: string) => void;
     onCalendarClick?: (value: boolean) => void;
@@ -24,7 +24,7 @@ type Props = {
 /**
  * @DEPRECATED
  */
-export const TodayItem: React.FC<Props> = ({ item, isEditMode, onEditToggle} ) => {
+export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle} ) => {
     const { id, task, dueDate } = item;
     const { onEditTodo } = useContext(MyGlobalContext);
 

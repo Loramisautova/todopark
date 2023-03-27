@@ -10,13 +10,15 @@ export type TodoItemFromStorage = {
     task: string,
     description?: string,
     dueDate?: number,
+    createDate?: number,
     isChecked?: boolean,
 }
 
-export type TodoItem = {
+export type TodoItemGlobal = {
     id: string,
     task: string,
     description?: string,
     dueDate?: Dayjs,
+    createDate?: Dayjs,
     isChecked?: boolean,
 }

@@ -1,52 +1,50 @@
-import React, { useState } from 'react';
-import { nanoid } from 'nanoid'
+import React, { useEffect, useState, useRef } from 'react';
 import { Button, Layout, Menu } from 'antd';
 import { HomeOutlined, MenuOutlined } from '@ant-design/icons';
+import { Outlet } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
 
-import { todoListMappers } from '../utils/domain/mappers';
-
-import { useLocalStorage } from '../hooks/useLocalStorage';
 import { AddTodo } from '../components/AddTodo';
 import { SideBar } from '../components/SideBar';
 
-import { TodoItem, TodoItemFromStorage } from '../types';
-import { MyGlobalContext } from '../context';
+import { useGlobalContext } from '../context';
 
 import styles from './styles.module.scss';
 
-const { Header, Footer } = Layout;
+const { Header, Footer, Content } = Layout;
 
-type Props = {
-    children: JSX.Element,
-}
-
-export const TodoLayout: React.FC<Props> = ({ children }) => {
+export const TodoLayout: React.FC = () => {
     const [collapsed, setCollapsed] = useState(true);
+    const ref = useRef(null);
+    const { onAddTodo } =  useGlobalContext();
 
-    const [todos, setTodos] = useLocalStorage<TodoItemFromStorage[], TodoItem[]>(
-        'todos',
-        [],
-        todoListMappers,
-    );
+    // const { ref, entry } = useInView({ trackVisibility: true, delay: 100 });
+
+    // const { ref, inView } = useInView({
+    //     threshold: 1,
+    // });
+
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    const handleScroll = () => {
+        const position = window.scrollY;
+        setScrollPosition(position);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     console.log('##############');
-    console.log('todos', todos);
+    console.log('scrollPosition', scrollPosition);
     console.log('##############');
 
-    const handleItemEdit = (editedItem: TodoItem) => {
-        const newTodos = todos.map((item: TodoItem) => item.id === editedItem.id ? editedItem : item);
-
-        setTodos(newTodos);
-    }
-
-    const handleAdd = (item: Omit<TodoItem, 'id'>) => {
-        setTodos([
-            {
-                id: nanoid(),
-                ...item,
-            },
-            ...todos,
-        ]);
+    const handleOnMenuClick = () => {
+        setCollapsed(!collapsed);
     }
 
     return (
@@ -59,22 +57,21 @@ export const TodoLayout: React.FC<Props> = ({ children }) => {
                     style={{ height: '43px' }}
                 >
                     <Menu.Item className={styles.item} key="1">
-                        <Button type="primary" onClick={() => setCollapsed(!collapsed)} icon={<MenuOutlined style={{ fontSize: '16px' }} />} />
+                        <Button type="primary" onClick={handleOnMenuClick} icon={<MenuOutlined style={{ fontSize: '16px' }} />} />
                         <Button type="primary" icon={<HomeOutlined style={{ fontSize: '16px' }} />} />
                     </Menu.Item>
                     <Menu.Item className={styles.item} key="2">
-                        <AddTodo onAdd={handleAdd} />
+                        <AddTodo onAdd={onAddTodo} />
                     </Menu.Item>
                 </Menu>
             </Header>
             <Layout className={styles.trigger}>
                 <SideBar onCollapsed={collapsed} />
-                <MyGlobalContext.Provider value={{
-                    onEditTodo: handleItemEdit,
-                    todoStore: todos,
-                }}>
-                    {children}
-                </MyGlobalContext.Provider>
+                <Content ref={ref} style={{ padding: '0 50px' }}>
+                    <div className={styles.layout}>
+                        <Outlet />
+                    </div>
+                </Content>
             </Layout>
             <Footer style={{ textAlign: 'center' }}>Todopark ©2023 Created by Lora Misautova</Footer>
         </>

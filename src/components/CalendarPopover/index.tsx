@@ -3,11 +3,11 @@ import { Popover } from 'antd';
 import { CalendarItem } from '../CalendarItem';
 import { Dayjs } from 'dayjs';
 import { MyGlobalContext } from '../../context';
-import { TodoItem } from '../../types';
+import { TodoItemGlobal } from '../../types';
 
 type Props = {
     children: JSX.Element,
-    item: TodoItem;
+    item: TodoItemGlobal;
     onCalendarClick: (value: boolean) => void;
 }
 

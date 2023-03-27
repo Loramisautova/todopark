@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Button, Form, Input } from 'antd';
 import classNames from 'classnames';
 
-import { TodoItem } from '../../types';
+import { TodoItemGlobal } from '../../types';
 import { MyGlobalContext } from '../../context';
 
 import styles from './styles.module.scss';
@@ -10,7 +10,7 @@ import styles from './styles.module.scss';
 const { TextArea } = Input;
 
 type Props = {
-    item: TodoItem;
+    item: TodoItemGlobal;
     onEditToggle?: (id: string) => void;
 };
 
@@ -20,7 +20,7 @@ export const EditItem: React.FC<Props> = ({ item, onEditToggle}) => {
 
     const { id, task } = item;
 
-    const [editedItem, setEditedItem] = useState<TodoItem>(item);
+    const [editedItem, setEditedItem] = useState<TodoItemGlobal>(item);
 
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setEditedItem(prev => ({

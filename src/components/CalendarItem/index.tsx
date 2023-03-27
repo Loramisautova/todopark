@@ -15,10 +15,6 @@ export const CalendarItem: React.FC<Props> = ({ defaultDate, onToggle, onDueDate
     const [selectedValue, setSelectedValue] = useState(defaultDate);
     const [isPreventSelect, setIsPreventSelect] = useState(true);
 
-    console.log('##############');
-    console.log('selectedValue', selectedValue);
-    console.log('##############');
-
     const wrapperStyle: React.CSSProperties = {
         width: 300,
         border: `1px solid ${token.colorBorderSecondary}`,

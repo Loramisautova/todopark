@@ -1,13 +1,15 @@
 import { createContext, useContext } from 'react';
-import { TodoItem } from './types';
+import { TodoItemGlobal } from './types';
 
 export type GlobalContent = {
-    onEditTodo?: (editedTodo: TodoItem) => void;
-    todoStore?: TodoItem[],
+    onEditTodo: (editedTodo: TodoItemGlobal) => void;
+    onAddTodo: (newTodo: Omit<TodoItemGlobal, 'id'>) => void;
+    todoStore: TodoItemGlobal[] | null,
 }
 
 export const MyGlobalContext = createContext<GlobalContent>({
     onEditTodo: () => {},
+    onAddTodo: () => {},
     todoStore: [],
 });
 

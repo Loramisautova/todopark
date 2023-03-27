@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { List } from 'antd';
 
-import { TodoItem } from '../../types';
-import { TodayItem } from '../TodayItem';
+import { TodoItemGlobal } from '../../types';
+import { TodoItem } from '../TodoItem';
 
 // import styles from './styles.module.scss';
 
 type Props = {
-    todos: TodoItem[] | undefined;
+    todos: TodoItemGlobal[] | undefined;
     // onEditTask?: (id: string, newTask: string) => void;
 };
 
-export const TodayList: React.FC<Props> = ({ todos}) => {
+export const TodoList: React.FC<Props> = ({ todos}) => {
     const containerRef = useRef(null);
     const firstItemRef = useRef(null);
     // стейт - id редактированного элемента
@@ -69,7 +69,7 @@ export const TodayList: React.FC<Props> = ({ todos}) => {
                     dataSource={todos}
                     renderItem={(todo, index) => (
                         <div ref={index === 0 ? firstItemRef : undefined}>
-                            <TodayItem
+                            <TodoItem
                                 key={todo.id}
                                 item={todo}
                                 isEditMode={editItemId === todo.id}
