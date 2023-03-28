@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from 'react';
 import { Calendar, theme } from 'antd';
-import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
     defaultDate?: Dayjs;
     onToggle: (value: boolean) => void;
     onDueDateSelect: (value: Dayjs | undefined) => void;
-}
+};
 
 export const CalendarItem: React.FC<Props> = ({ defaultDate, onToggle, onDueDateSelect }) => {
     const { token } = theme.useToken();
-    const [value, setValue] = useState(defaultDate);
+    const [, setValue] = useState(defaultDate);
     const [selectedValue, setSelectedValue] = useState(defaultDate);
     const [isPreventSelect, setIsPreventSelect] = useState(true);
-
-    console.log('##############');
-    console.log('selectedValue', selectedValue);
-    console.log('##############');
 
     const wrapperStyle: React.CSSProperties = {
         width: 300,
@@ -49,7 +44,7 @@ export const CalendarItem: React.FC<Props> = ({ defaultDate, onToggle, onDueDate
         const yesterday = dayjs().subtract(1, 'd');
 
         return currentDate.isBefore(yesterday);
-    }
+    };
 
     return (
         <div style={wrapperStyle}>

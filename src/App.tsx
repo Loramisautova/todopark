@@ -1,39 +1,29 @@
+import { ConfigProvider, Layout } from 'antd';
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './App.scss';
-import { Layout, ConfigProvider } from 'antd';
+import { RouterProvider } from 'react-router-dom';
 
+import { appRouter } from './router/router';
+import { RootStoreProvider } from './store/RootStoreProvider';
+
+import './App.scss';
 import './styles/global.scss';
 
-import { MainPage } from './pages/MainPage';
-import { InboxPage } from './pages/InboxPage';
-
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <MainPage />,
-        // errorElement: <ErrorPage />,
-    },
-    {
-        path: '/inbox',
-        element: <InboxPage />,
-    }
-]);
-
 function App() {
-  return (
-      <ConfigProvider
-          theme={{
-              token: {
-                  colorPrimary: '#db4c3f',
-              },
-          }}
-      >
-          <Layout className="layout">
-              <RouterProvider router={router} />
-          </Layout>
-      </ConfigProvider>
-  );
+    return (
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: '#db4c3f',
+                },
+            }}
+        >
+            <Layout className='layout'>
+                <RootStoreProvider>
+                    <RouterProvider router={appRouter} />
+                </RootStoreProvider>
+            </Layout>
+        </ConfigProvider>
+    );
 }
 
 export default App;

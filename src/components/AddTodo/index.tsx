@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Modal, Input, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { Modal, Input, Button } from 'antd';
+import React, { useState } from 'react';
 
 import { TodoItem } from '../../types';
+
 import styles from './styles.module.scss';
 
 const { TextArea } = Input;
@@ -11,18 +12,18 @@ type Props = {
     onAdd: (item: Omit<TodoItem, 'id'>) => void;
 };
 
-export const AddTodo: React.FC<Props> = ( { onAdd }) => {
+export const AddTodo: React.FC<Props> = ({ onAdd }) => {
     const [task, setTask] = useState('');
     const [description, setDescription] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+
     const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTask(e.target.value);
-    }
+    };
 
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(e.target.value);
-    }
+    };
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -30,7 +31,7 @@ export const AddTodo: React.FC<Props> = ( { onAdd }) => {
 
     const handleOk = () => {
         setIsModalOpen(false);
-        onAdd({task, description});
+        onAdd({ task, description });
 
         setTask('');
         setDescription('');
@@ -45,20 +46,24 @@ export const AddTodo: React.FC<Props> = ( { onAdd }) => {
 
     return (
         <>
-            <Button type="primary" className={styles.edit} onClick={showModal} icon={<PlusOutlined style={{ fontSize: '16px' }} />} />
+            <Button
+                type='primary'
+                onClick={showModal}
+                icon={<PlusOutlined style={{ fontSize: '16px' }} />}
+            />
             <Modal
                 open={isModalOpen}
                 onOk={handleOk}
-                okText={"Add task"}
-                okButtonProps={{ disabled: !Boolean(task) }}
+                okText={'Add task'}
+                okButtonProps={{ disabled: !task }}
                 onCancel={handleCancel}
                 maskClosable={false}
                 closable={false}
             >
-                <Input placeholder="Task name" value={task} className={styles.title} onChange={handleTextChange} />
+                <Input placeholder='Task name' value={task} className={styles.title} onChange={handleTextChange} />
                 <br />
-                <TextArea placeholder="Description" value={description} rows={4} onChange={handleDescriptionChange}/>
+                <TextArea placeholder='Description' value={description} rows={4} onChange={handleDescriptionChange} />
             </Modal>
         </>
     );
-}
+};

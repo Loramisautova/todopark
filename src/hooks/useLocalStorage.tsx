@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { StorageMappers } from "../types";
+import { useState, useEffect } from 'react';
+
+import { StorageMapper } from '../types';
 
 function getStorageValue(key: string, defaultValue: []) {
     const saved = localStorage.getItem(key);
@@ -9,7 +10,7 @@ function getStorageValue(key: string, defaultValue: []) {
 export const useLocalStorage = <TStorage, TInternal>(
     key: string,
     defaultValue: [],
-    mappers?: StorageMappers<TStorage, TInternal>,
+    mappers?: StorageMapper<TStorage, TInternal>,
 ) => {
     const [value, setValue] = useState(() => {
         const data = getStorageValue(key, defaultValue);

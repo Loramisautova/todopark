@@ -1,32 +1,55 @@
-import React, { useContext } from 'react';
-import { Layout } from 'antd';
+import { Typography } from 'antd';
+import dayjs from 'dayjs';
+import React, { useMemo } from 'react';
 
-import { TodayList } from '../../components/TodayList';
-
-import { TodoLayout } from '../../layout';
-import { MyGlobalContext } from '../../context';
+import { TodoList } from '../../components/TodoList';
+import { useRootStore } from '../../store/rootStore';
+import { formatToday } from '../../utils/dates';
+import { overdueTodoListFilter } from '../../utils/filters/overdue-todo-list';
+import { todayTodoListFilter } from '../../utils/filters/today-todo-list';
 
 import styles from './styles.module.scss';
 
-const { Content } = Layout;
-
 export const MainPage: React.FC = () => {
-    const { todoStore } = useContext(MyGlobalContext);
+    const { todos } = useRootStore();
 
-    console.log('##############');
-    console.log('todoStore', todoStore);
-    console.log('##############');
+    const todaySubTitle = useMemo(
+        () => `${dayjs(`${dayjs().day()}`).format('ddd')} ${formatToday()}`,
+        [],
+    );
+    const todayTodoListTitle = useMemo(
+        () => `${formatToday()} • Today • ${dayjs(`${dayjs().day()}`).format('dddd')}`,
+        [],
+    );
+    const overdueTodos = useMemo(() => overdueTodoListFilter(todos || []), [todos]);
+    const todayTodos = useMemo(() => todayTodoListFilter(todos || []), [todos]);
 
     return (
-        <TodoLayout>
-            <Content style={{ padding: '0 50px' }}>
-                <div className={styles.layout} style={{ padding: 50, maxWidth: 910, minHeight: 270 }}>
-                    {
-                        todoStore?.length &&
-                        <TodayList todos={todoStore} />
-                    }
+        <div>
+            <div className={styles.header}>
+                <Typography.Title level={3} style={{ margin: 0 }}>
+                    Today
+                </Typography.Title>
+                <Typography.Text className={styles.subTitle}>
+                    {todaySubTitle}
+                </Typography.Text>
+            </div>
+            {Boolean(overdueTodos?.length) && (
+                <div>
+                    <Typography.Title className={styles.title} level={5}>
+                        Overdue
+                    </Typography.Title>
+                    <TodoList todos={overdueTodos} />
                 </div>
-            </Content>
-        </TodoLayout>
+            )}
+            {Boolean(todayTodos?.length) && (
+                <>
+                    <Typography.Title className={styles.title} level={5}>
+                        {todayTodoListTitle}
+                    </Typography.Title>
+                    <TodoList todos={todayTodos} />
+                </>
+            )}
+        </div>
     );
-}
+};
