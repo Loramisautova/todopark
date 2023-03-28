@@ -2,14 +2,14 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Modal, Input, Button } from 'antd';
 import React, { useState } from 'react';
 
-import { TodoItemGlobal } from '../../types';
+import { TodoItem } from '../../types';
 
 import styles from './styles.module.scss';
 
 const { TextArea } = Input;
 
 type Props = {
-    onAdd: (item: Omit<TodoItemGlobal, 'id'>) => void;
+    onAdd: (item: Omit<TodoItem, 'id'>) => void;
 };
 
 export const AddTodo: React.FC<Props> = ({ onAdd }) => {

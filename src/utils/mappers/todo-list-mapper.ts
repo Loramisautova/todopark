@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
-import { StorageMappers, TodoItemGlobal, TodoItemFromStorage } from '../../types';
+import { StorageMapper, TodoItem, TodoItemFromStorage } from '../../types';
 
 dayjs.extend(utc);
 
-export const todoListMappers: StorageMappers<TodoItemFromStorage[], TodoItemGlobal[]> = {
+export const todoListMapper: StorageMapper<TodoItemFromStorage[], TodoItem[]> = {
     to: (data) =>
         data?.map((item) => ({
             ...item,

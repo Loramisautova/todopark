@@ -1,26 +1,25 @@
 import { Button, Form, Input } from 'antd';
 import classNames from 'classnames';
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
-import { MyGlobalContext } from '../../context';
-import { TodoItemGlobal } from '../../types';
+import { useRootStore } from '../../store/rootStore';
+import { TodoItem } from '../../types';
 
 import styles from './styles.module.scss';
 
 const { TextArea } = Input;
 
 type Props = {
-    item: TodoItemGlobal;
+    item: TodoItem;
     onEditToggle?: (id: string) => void;
 };
 
 export const EditItem: React.FC<Props> = ({ item, onEditToggle }) => {
-    const { onEditTodo } = useContext(MyGlobalContext);
-    const [isFocused, setIsFocused] = useState(false);
-
     const { id, task } = item;
 
-    const [editedItem, setEditedItem] = useState<TodoItemGlobal>(item);
+    const { onEditTodo } = useRootStore();
+    const [isFocused, setIsFocused] = useState(false);
+    const [editedItem, setEditedItem] = useState<TodoItem>(item);
 
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setEditedItem((prev) => ({

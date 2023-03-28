@@ -1,67 +1,28 @@
 import { Typography } from 'antd';
 import dayjs from 'dayjs';
-import React, { useCallback, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
+import React, { useMemo } from 'react';
 
 import { TodoList } from '../../components/TodoList';
-import { useGlobalContext } from '../../context';
-import { TodoItemGlobal } from '../../types';
+import { useRootStore } from '../../store/rootStore';
 import { formatToday } from '../../utils/dates';
+import { overdueTodoListFilter } from '../../utils/filters/overdue-todo-list';
+import { todayTodoListFilter } from '../../utils/filters/today-todo-list';
 
 import styles from './styles.module.scss';
 
-// type ContextType = {
-//     inView: boolean | null;
-// }
 export const MainPage: React.FC = () => {
-    const { todoStore } = useGlobalContext();
-    // const { inView } = useOutletContext<ContextType>();
+    const { todos } = useRootStore();
 
-    // console.log('##############');
-    // console.log('inView', inView);
-    // console.log('##############');
-
-    const [height, setHeight] = useState(0);
-
-    const measuredRef = useCallback((node: HTMLDivElement) => {
-        console.log('##############');
-        console.log('node', node);
-        console.log('##############');
-
-        if (node !== null) {
-            setHeight(window.pageYOffset + node.getBoundingClientRect().top);
-        }
-    }, []);
-
-    console.log('##############');
-    console.log('height', height);
-    console.log('##############');
-
-    // useEffect(() => {});
-
-    const overdueTodos = todoStore?.reduce((acc: TodoItemGlobal[], curr: TodoItemGlobal) => {
-        if (dayjs().isAfter(dayjs(curr.dueDate), 'day') && curr.dueDate !== undefined) {
-            acc.push(curr);
-        }
-        return acc;
-    }, []);
-
-    const todayTodos = React.useMemo<TodoItemGlobal[] | undefined>(() => {
-        return todoStore?.reduce((acc: TodoItemGlobal[], curr: TodoItemGlobal) => {
-            if (
-                dayjs().isSame(dayjs(curr.createDate), 'day') &&
-                dayjs().isSame(dayjs(curr.dueDate), 'day') &&
-                curr.createDate !== undefined
-            ) {
-                acc.push(curr);
-            }
-            return acc;
-        }, []);
-    }, [todoStore]);
-
-    const { ref } = useInView({
-        threshold: 0,
-    });
+    const todaySubTitle = useMemo(
+        () => `${dayjs(`${dayjs().day()}`).format('ddd')} ${formatToday()}`,
+        [],
+    );
+    const todayTodoListTitle = useMemo(
+        () => `${formatToday()} • Today • ${dayjs(`${dayjs().day()}`).format('dddd')}`,
+        [],
+    );
+    const overdueTodos = useMemo(() => overdueTodoListFilter(todos || []), [todos]);
+    const todayTodos = useMemo(() => todayTodoListFilter(todos || []), [todos]);
 
     return (
         <div>
@@ -70,23 +31,22 @@ export const MainPage: React.FC = () => {
                     Today
                 </Typography.Title>
                 <Typography.Text className={styles.subTitle}>
-                    {dayjs(`${dayjs().day()}`).format('ddd')} {formatToday()}
+                    {todaySubTitle}
                 </Typography.Text>
             </div>
             {Boolean(overdueTodos?.length) && (
-                <div ref={ref}>
-                    {/* <h2>{`Header inside viewport ${inView}.`}</h2>*/}
-                    <h5 className={styles.title} ref={measuredRef}>
+                <div>
+                    <Typography.Title className={styles.title} level={5}>
                         Overdue
-                    </h5>
+                    </Typography.Title>
                     <TodoList todos={overdueTodos} />
                 </div>
             )}
             {Boolean(todayTodos?.length) && (
                 <>
-                    <h5 className={styles.title}>
-                        {formatToday()} &#x2022; Today &#x2022; {dayjs(`${dayjs().day()}`).format('dddd')}
-                    </h5>
+                    <Typography.Title className={styles.title} level={5}>
+                        {todayTodoListTitle}
+                    </Typography.Title>
                     <TodoList todos={todayTodos} />
                 </>
             )}

@@ -1,32 +1,12 @@
-import { Layout, ConfigProvider } from 'antd';
+import { ConfigProvider, Layout } from 'antd';
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 
-import { GlobalProvider } from './GlobalProvider';
-import { TodoLayout } from './layout';
-import { InboxPage } from './pages/InboxPage';
-import { MainPage } from './pages/MainPage';
-import { APP_ROUTES } from './router/routes';
+import { appRouter } from './router/router';
+import { RootStoreProvider } from './store/RootStoreProvider';
+
 import './App.scss';
 import './styles/global.scss';
-
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <TodoLayout />,
-        // errorElement: <ErrorPage />,
-        children: [
-            {
-                path: APP_ROUTES.default.path,
-                element: <MainPage />,
-            },
-            {
-                path: APP_ROUTES.inbox.path,
-                element: <InboxPage />,
-            },
-        ],
-    },
-]);
 
 function App() {
     return (
@@ -38,9 +18,9 @@ function App() {
             }}
         >
             <Layout className='layout'>
-                <GlobalProvider>
-                    <RouterProvider router={router} />
-                </GlobalProvider>
+                <RootStoreProvider>
+                    <RouterProvider router={appRouter} />
+                </RootStoreProvider>
             </Layout>
         </ConfigProvider>
     );

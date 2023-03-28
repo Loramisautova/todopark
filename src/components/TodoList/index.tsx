@@ -1,60 +1,17 @@
 import { List } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
-import { TodoItemGlobal } from '../../types';
+import { TodoItem as TTodoItem } from '../../types';
 import { TodoItem } from '../TodoItem';
 
-// import styles from './styles.module.scss';
-
 type Props = {
-    todos: TodoItemGlobal[] | undefined;
+    todos: TTodoItem[];
     // onEditTask?: (id: string, newTask: string) => void;
 };
 
 export const TodoList: React.FC<Props> = ({ todos }) => {
-    const containerRef = useRef(null);
-    const firstItemRef = useRef(null);
-    // стейт - id редактированного элемента
+    // Id редактируемого элемента
     const [editItemId, setEditItemId] = useState<string>();
-
-    useEffect(() => {
-        let observer: IntersectionObserver;
-        const container = containerRef.current;
-        const firstElement = firstItemRef.current;
-
-        console.log('##############');
-        console.log('container', container);
-        console.log('firstElement', firstElement);
-        console.log('##############');
-
-        if (container) {
-            observer = new IntersectionObserver(
-                (entries) => {
-                    const [entry] = entries;
-
-                    console.log('##############');
-                    console.log('entries', entries);
-                    console.log('entry.isIntersecting', entry.intersectionRatio);
-                    console.log('##############');
-                },
-                {
-                    root: container,
-                    rootMargin: '0px',
-                    threshold: [1],
-                },
-            );
-
-            if (firstElement) {
-                observer.observe(firstElement);
-            }
-        }
-
-        return () => {
-            if (observer && firstElement) {
-                observer.unobserve(firstElement);
-            }
-        };
-    }, [containerRef, firstItemRef]);
 
     const handleItemEditToggle = (id: string) => {
         if (editItemId === id) {
@@ -65,20 +22,16 @@ export const TodoList: React.FC<Props> = ({ todos }) => {
     };
 
     return todos?.length ? (
-        <div ref={containerRef}>
-            <List
-                dataSource={todos}
-                renderItem={(todo, index) => (
-                    <div ref={index === 0 ? firstItemRef : undefined}>
-                        <TodoItem
-                            key={todo.id}
-                            item={todo}
-                            isEditMode={editItemId === todo.id}
-                            onEditToggle={handleItemEditToggle}
-                        />
-                    </div>
-                )}
-            />
-        </div>
+        <List
+            dataSource={todos}
+            renderItem={(todo) => (
+                <TodoItem
+                    key={todo.id}
+                    item={todo}
+                    isEditMode={editItemId === todo.id}
+                    onEditToggle={handleItemEditToggle}
+                />
+            )}
+        />
     ) : null;
 };

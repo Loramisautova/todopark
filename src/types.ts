@@ -1,6 +1,6 @@
 import { Dayjs } from 'dayjs';
 
-export type StorageMappers<TStoredData, TInternalData> = {
+export type StorageMapper<TStoredData, TInternalData> = {
     to?: (data: TInternalData) => TStoredData;
     from?: (data: TStoredData) => TInternalData;
 };
@@ -14,7 +14,7 @@ export type TodoItemFromStorage = {
     isChecked?: boolean;
 };
 
-export type TodoItemGlobal = {
+export type TodoItem = {
     id: string;
     task: string;
     description?: string;

@@ -1,15 +1,15 @@
 import React from 'react';
 
 import { TodoList } from '../../components/TodoList';
-import { useGlobalContext } from '../../context';
+import { useRootStore } from '../../store/rootStore';
 
 export const InboxPage = () => {
-    const { todoStore } = useGlobalContext();
+    const { todos } = useRootStore();
 
     return (
         <>
             <h1 style={{ fontSize: 20, fontWeight: 700 }}>Inbox</h1>
-            {todoStore?.length && <TodoList todos={todoStore} />}
+            {todos?.length && <TodoList todos={todos} />}
         </>
     );
 };

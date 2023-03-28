@@ -1,23 +1,22 @@
 import { Popover } from 'antd';
 import { Dayjs } from 'dayjs';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
-import { MyGlobalContext } from '../../context';
-import { TodoItemGlobal } from '../../types';
+import { useRootStore } from '../../store/rootStore';
+import { TodoItem } from '../../types';
 import { CalendarItem } from '../CalendarItem';
 
 type Props = {
     children: JSX.Element;
-    item: TodoItemGlobal;
+    item: TodoItem;
     onCalendarClick: (value: boolean) => void;
 };
 
 export const CalendarPopover: React.FC<Props> = ({ children, item }) => {
-    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
     const { dueDate } = item;
 
-    // todoStore
-    const { onEditTodo } = useContext(MyGlobalContext);
+    const { onEditTodo } = useRootStore();
+    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
     const handleCalendarToggle = (value: boolean) => {
         setIsCalendarOpen(value);

@@ -1,11 +1,11 @@
-import { CheckOutlined, EditOutlined, CalendarOutlined } from '@ant-design/icons';
-import { List, Typography, Button } from 'antd';
+import { CalendarOutlined, CheckOutlined, EditOutlined } from '@ant-design/icons';
+import { Button, List, Typography } from 'antd';
 import classNames from 'classnames';
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { DATE_SHORT_REVERTED_FORMAT } from '../../consts/formats';
-import { MyGlobalContext } from '../../context';
-import { TodoItemGlobal } from '../../types';
+import { useRootStore } from '../../store/rootStore';
+import { TodoItem as TTodoItem } from '../../types';
 import { formatDate } from '../../utils/dates';
 import { CalendarPopover } from '../CalendarPopover';
 import { EditItem } from '../EditItem';
@@ -13,7 +13,7 @@ import { EditItem } from '../EditItem';
 import styles from './styles.module.scss';
 
 type Props = {
-    item: TodoItemGlobal;
+    item: TTodoItem;
     isEditMode?: boolean;
     onEditToggle?: (id: string) => void;
     onCalendarClick?: (value: boolean) => void;
@@ -24,7 +24,8 @@ type Props = {
  */
 export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle }) => {
     const { id, task, dueDate } = item;
-    const { onEditTodo } = useContext(MyGlobalContext);
+
+    const { onEditTodo } = useRootStore();
 
     const handleEdit = () => {
         // передаем id редактированного элемента
