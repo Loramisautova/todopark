@@ -21,8 +21,6 @@
     "react-moment": "^1.1.3",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
-    "sass": "^1.57.1",
-    "typescript": "^4.9.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -33,6 +31,12 @@
     "lint": "eslint --ignore-path .gitignore 'src/**/*.{js,jsx,ts,tsx,json}'",
     "lint:fix": "eslint --fix --ignore-path .gitignore 'src/**/*.{js,jsx,ts,tsx,json}'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
@@ -56,6 +60,10 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^2.8.7"
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.7",
+    "sass": "^1.60.0",
+    "typescript": "^4.9.4",
+    "typescript-plugin-css-modules": "^5.0.0"
   }
 }

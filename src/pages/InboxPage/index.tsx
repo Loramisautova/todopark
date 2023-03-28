@@ -1,7 +1,7 @@
 import React from 'react';
-import { Header } from 'antd/es/layout/layout';
-import { useGlobalContext } from '../../context';
+
 import { TodoList } from '../../components/TodoList';
+import { useGlobalContext } from '../../context';
 
 export const InboxPage = () => {
     const { todoStore } = useGlobalContext();
@@ -9,10 +9,7 @@ export const InboxPage = () => {
     return (
         <>
             <h1 style={{ fontSize: 20, fontWeight: 700 }}>Inbox</h1>
-            {
-                todoStore?.length && <TodoList todos={todoStore} />
-            }
+            {todoStore?.length && <TodoList todos={todoStore} />}
         </>
-
     );
-}
+};

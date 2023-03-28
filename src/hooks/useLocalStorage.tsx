@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { StorageMappers } from "../types";
+import { useState, useEffect } from 'react';
+
+import { StorageMappers } from '../types';
 
 function getStorageValue(key: string, defaultValue: []) {
     const saved = localStorage.getItem(key);

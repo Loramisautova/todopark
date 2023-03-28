@@ -1,17 +1,15 @@
-
 type AppRoute = {
     path: string;
-}
+};
 
 export const APP_ROUTES: Record<string, AppRoute> = {
     default: {
-        path: '/'
+        path: '/',
     },
     inbox: {
-      path: '/inbox'
+        path: '/inbox',
     },
     upcoming: {
-        path: '/upcoming'
+        path: '/upcoming',
     },
-}
-
+};
