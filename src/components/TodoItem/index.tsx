@@ -40,7 +40,7 @@ export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle }) =>
         onEditTodo &&
             onEditTodo({
                 ...item,
-                isChecked: true,
+                isDone: true,
             });
     };
 

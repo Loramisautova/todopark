@@ -11,7 +11,7 @@ export type TodoItemFromStorage = {
     description?: string;
     dueDate?: number;
     createDate?: number;
-    isChecked?: boolean;
+    isDone?: boolean;
 };
 
 export type TodoItem = {
@@ -20,5 +20,5 @@ export type TodoItem = {
     description?: string;
     dueDate?: Dayjs;
     createDate?: Dayjs;
-    isChecked?: boolean;
+    isDone?: boolean;
 };
