@@ -1,7 +1,7 @@
 import { CalendarOutlined, CheckOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, List, Typography } from 'antd';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { DATE_SHORT_REVERTED_FORMAT } from '../../consts/formats';
 import { useRootStore } from '../../store/rootStore';
@@ -23,9 +23,10 @@ type Props = {
  * @DEPRECATED
  */
 export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle }) => {
-    const { id, task, dueDate } = item;
+    const { id, task, dueDate, isDone } = item;
 
     const { onEditTodo } = useRootStore();
+    const [isChecked, setIsChecked] = useState(false);
 
     const handleEdit = () => {
         // передаем id редактированного элемента
@@ -37,30 +38,44 @@ export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle }) =>
     };
 
     const handleCheckClick = () => {
-        onEditTodo &&
+        setIsChecked(!isChecked);
+
+        setTimeout(() => {
+            onEditTodo &&
             onEditTodo({
                 ...item,
-                isDone: true,
+                isDone: !item.isDone,
             });
+        }, 200);
     };
 
     return (
         <>
             {!isEditMode && (
                 <List.Item className={styles.item}>
-                    <div className={styles.circle} onClick={handleCheckClick}>
-                        <CheckOutlined className={styles.check} style={{ fontSize: '8px', color: '#808080' }} />
-                    </div>
+                    <Button
+                        className={classNames(styles.circle, { [styles.checked]: isChecked || isDone })}
+                        role="checkbox"
+                        aria-checked="false"
+                        icon={<CheckOutlined
+                            className={classNames(styles.check, { [styles.checked]: isChecked || isDone })}
+                            style={{ fontSize: '8px', color: '#808080' }}
+                        />}
+                        onClick={handleCheckClick}
+                    />
                     <div className={styles.content}>
-                        <Typography.Text>{task}</Typography.Text>
+                        <Typography.Text
+                            className={classNames({ [styles.textChecked]: isChecked || isDone })}
+                        >
+                            {task}
+                        </Typography.Text>
                         <CalendarPopover item={item} onCalendarClick={handleCalendarClick}>
                             <div className={styles.dueDate}>
                                 {dueDate && (
                                     <Button
-                                        className={classNames(styles.active, { [styles.open]: handleCalendarClick })}
+                                        className={styles.active}
                                         icon={
                                             <CalendarOutlined
-                                                className={styles.icon}
                                                 onClick={() => handleCalendarClick(true)}
                                             />
                                         }
@@ -85,7 +100,7 @@ export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle }) =>
                         <div>
                             <CalendarPopover item={item} onCalendarClick={handleCalendarClick}>
                                 <Button
-                                    className={classNames(styles.btn, { [styles.open]: handleCalendarClick })}
+                                    className={styles.btn}
                                     style={{ width: '24px', height: '24px' }}
                                     icon={
                                         <CalendarOutlined

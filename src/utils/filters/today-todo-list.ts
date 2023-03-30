@@ -10,6 +10,7 @@ export const todayTodoListFilter = (todoList: TodoItem[]) => todoList.reduce(
         if (
             dayjs().utc().isSame(dayjs(curr.createDate).utc(), 'day') &&
             dayjs().utc().isSame(dayjs(curr.dueDate).utc(), 'day') &&
+            curr.isDone !== true &&
             curr.createDate !== undefined
         ) {
             acc.push(curr);
