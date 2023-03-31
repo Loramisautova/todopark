@@ -1,7 +1,7 @@
 import { CalendarOutlined, CheckOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, List, Typography } from 'antd';
 import classNames from 'classnames';
-import { debounce } from 'debounce';
+import debounce from 'lodash/debounce';
 import React, { useState, useEffect } from 'react';
 
 import { DATE_SHORT_REVERTED_FORMAT } from '../../consts/formats';
@@ -29,6 +29,10 @@ export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle }) =>
     const { onEditTodo } = useRootStore();
     const [isChecked, setIsChecked] = useState(isDone);
 
+    useEffect(() => {
+        debouncedEdit();
+    }, [isChecked]);
+
     const handleEdit = () => {
         // передаем id редактированного элемента
         onEditToggle?.(id);
@@ -37,10 +41,6 @@ export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle }) =>
     const handleCalendarClick = (value: boolean) => {
         return value;
     };
-
-    useEffect(() => {
-        debouncedEdit();
-    }, [isChecked]);
 
     const debouncedEdit = debounce(
             () => {
