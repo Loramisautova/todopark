@@ -1,7 +1,8 @@
 import { CalendarOutlined, CheckOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, List, Typography } from 'antd';
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import { debounce } from 'debounce';
+import React, { useState, useEffect } from 'react';
 
 import { DATE_SHORT_REVERTED_FORMAT } from '../../consts/formats';
 import { useRootStore } from '../../store/rootStore';
@@ -26,7 +27,7 @@ export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle }) =>
     const { id, task, dueDate, isDone } = item;
 
     const { onEditTodo } = useRootStore();
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(isDone);
 
     const handleEdit = () => {
         // передаем id редактированного элемента
@@ -37,16 +38,22 @@ export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle }) =>
         return value;
     };
 
+    useEffect(() => {
+        debouncedEdit();
+    }, [isChecked]);
+
+    const debouncedEdit = debounce(
+            () => {
+                onEditTodo?.({
+                    ...item,
+                    isDone: isChecked,
+                });
+            },
+            500,
+    );
+
     const handleCheckClick = () => {
         setIsChecked(!isChecked);
-
-        setTimeout(() => {
-            onEditTodo &&
-            onEditTodo({
-                ...item,
-                isDone: !item.isDone,
-            });
-        }, 200);
     };
 
     return (
@@ -54,18 +61,18 @@ export const TodoItem: React.FC<Props> = ({ item, isEditMode, onEditToggle }) =>
             {!isEditMode && (
                 <List.Item className={styles.item}>
                     <Button
-                        className={classNames(styles.circle, { [styles.checked]: isChecked || isDone })}
+                        className={classNames(styles.circle, { [styles.checked]: isChecked })}
                         role="checkbox"
                         aria-checked="false"
                         icon={<CheckOutlined
-                            className={classNames(styles.check, { [styles.checked]: isChecked || isDone })}
+                            className={classNames(styles.check, { [styles.checked]: isChecked })}
                             style={{ fontSize: '8px', color: '#808080' }}
                         />}
                         onClick={handleCheckClick}
                     />
                     <div className={styles.content}>
                         <Typography.Text
-                            className={classNames({ [styles.textChecked]: isChecked || isDone })}
+                            className={classNames({ [styles.textChecked]: isChecked })}
                         >
                             {task}
                         </Typography.Text>

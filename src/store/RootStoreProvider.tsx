@@ -27,6 +27,7 @@ export const RootStoreProvider: React.FC<PropsWithChildren> = ({ children }) => 
             {
                 id: nanoid(),
                 createDate: dayjs(),
+                isDone: false,
                 ...item,
             },
             ...todos,
