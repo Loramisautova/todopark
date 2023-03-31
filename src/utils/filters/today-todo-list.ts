@@ -5,17 +5,12 @@ import { TodoItem } from '../../types';
 
 dayjs.extend(utc);
 
-export const todayTodoListFilter = (todoList: TodoItem[]) => todoList.reduce(
-    (acc: TodoItem[], curr: TodoItem) => {
-        if (
+export const todayTodoListFilter = (todoList: TodoItem[]) => todoList.filter((curr) => {
+        return (
             dayjs().utc().isSame(dayjs(curr.createDate).utc(), 'day') &&
             dayjs().utc().isSame(dayjs(curr.dueDate).utc(), 'day') &&
+            curr.isDone !== true &&
             curr.createDate !== undefined
-        ) {
-            acc.push(curr);
-        }
-
-        return acc;
-    },
-    [],
+        );
+    }
 );
