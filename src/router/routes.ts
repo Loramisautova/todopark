@@ -12,4 +12,7 @@ export const APP_ROUTES: Record<string, AppRoute> = {
     upcoming: {
         path: '/upcoming',
     },
+    todo: {
+        path: 'todo/:id'
+    },
 };

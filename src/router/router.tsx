@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import { TodoItemCard } from '../components/TodoItemCard';
 import { TodoLayout } from '../layout';
 import { InboxPage } from '../pages/InboxPage';
 import { MainPage } from '../pages/MainPage';
@@ -22,5 +23,10 @@ export const appRouter = createBrowserRouter([
                 element: <InboxPage />,
             },
         ],
+
+    },
+    {
+        path: APP_ROUTES.todo.path,
+        element: <TodoItemCard />,
     },
 ]);

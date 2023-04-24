@@ -19,8 +19,8 @@ export const InboxPage = () => {
             <Typography.Title className={styles.header} level={3} style={{ fontSize: 20, fontWeight: 700 }}>
                 Inbox
             </Typography.Title>
-            {inboxTodos?.length && <TodoList todos={inboxTodos} />}
-            {doneTodos?.length && <TodoList todos={doneTodos} />}
+            {Boolean(inboxTodos?.length) && <TodoList todos={inboxTodos} />}
+            {Boolean(doneTodos?.length) && <TodoList todos={doneTodos} />}
         </>
     );
 };

@@ -1,6 +1,6 @@
 import { Typography } from 'antd';
 import dayjs from 'dayjs';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { TodoList } from '../../components/TodoList';
 import { useRootStore } from '../../store/rootStore';
@@ -12,6 +12,12 @@ import styles from './styles.module.scss';
 
 export const MainPage: React.FC = () => {
     const { todos } = useRootStore();
+
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const handleModalCancel = () => {
+        setModalVisible(false);
+    }
 
     const todaySubTitle = useMemo(
         () => `${dayjs(`${dayjs().day()}`).format('ddd')} ${formatToday()}`,

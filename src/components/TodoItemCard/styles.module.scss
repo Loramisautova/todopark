@@ -1,0 +1,97 @@
+.card {
+    width: 864px !important;
+
+    .inboxIcon {
+        margin-right: 4px;
+    }
+
+    :global {
+        .ant-modal-content {
+                    padding: 20px 0 !important;
+        }
+        .ant-divider.ant-divider-horizontal {
+            margin: 16px 0 !important;
+        }
+        .ant-layout-header {
+            padding: 0 16px;
+        }
+        .ant-layout-content {
+            padding: 0 16px;
+        }
+        .anticon-align-left {
+            svg path {
+                color: #0000008f;
+            }
+        }
+        .ant-btn {
+            padding: 0;
+        }
+    }
+
+    .content {
+        display: flex;
+    }
+
+    .contentButton:hover {
+        background-color: transparent !important;
+        color: inherit !important;
+        border-color: transparent !important;
+        cursor: text;
+    }
+
+    .description {
+        color: #0000008f;
+    }
+
+    .title {
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+
+.circle {
+    display: flex;
+    justify-content: center;
+    align-self: flex-start;
+    position: relative;
+    context: '';
+    margin: 10px 6px 0 0;
+    height: 16px;
+    width: 16px !important;
+    border: 1px solid #808080 !important;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:disabled {
+        background-color: white;
+
+       &:hover {
+              .check {
+                  opacity: 0;
+              }
+          }
+    }
+
+    &:hover {
+        .check {
+            opacity: 1;
+        }
+    }
+}
+
+.check {
+    position: absolute;
+    align-self: center;
+    z-index: 1;
+    opacity: 0;
+}
+
+.checked {
+    background-color: #808080 !important;
+
+    .check.checked {
+        color: white !important;
+        opacity: 1;
+    }
+}
