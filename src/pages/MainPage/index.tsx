@@ -1,8 +1,11 @@
 import { Typography } from 'antd';
 import dayjs from 'dayjs';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+import { Outlet } from 'react-router-dom';
 
 import { TodoList } from '../../components/TodoList';
+import { useTodoModal } from '../../hooks/useTodoModal';
+import { APP_ROUTES } from '../../router/routes';
 import { useRootStore } from '../../store/rootStore';
 import { formatToday } from '../../utils/dates';
 import { overdueTodoListFilter } from '../../utils/filters/overdue-todo-list';
@@ -12,12 +15,7 @@ import styles from './styles.module.scss';
 
 export const MainPage: React.FC = () => {
     const { todos } = useRootStore();
-
-    const [modalVisible, setModalVisible] = useState(false);
-
-    const handleModalCancel = () => {
-        setModalVisible(false);
-    }
+    const [openFn] = useTodoModal(APP_ROUTES.root.todo.path);
 
     const todaySubTitle = useMemo(
         () => `${dayjs(`${dayjs().day()}`).format('ddd')} ${formatToday()}`,
@@ -32,6 +30,7 @@ export const MainPage: React.FC = () => {
 
     return (
         <div>
+            <Outlet />
             <div className={styles.header}>
                 <Typography.Title level={3} style={{ margin: 0 }}>
                     Today
@@ -45,7 +44,7 @@ export const MainPage: React.FC = () => {
                     <Typography.Title className={styles.title} level={5}>
                         Overdue
                     </Typography.Title>
-                    <TodoList todos={overdueTodos} />
+                    <TodoList todos={overdueTodos} onItemClick={openFn} />
                 </div>
             )}
             {Boolean(todayTodos?.length) && (
@@ -53,7 +52,7 @@ export const MainPage: React.FC = () => {
                     <Typography.Title className={styles.title} level={5}>
                         {todayTodoListTitle}
                     </Typography.Title>
-                    <TodoList todos={todayTodos} />
+                    <TodoList todos={todayTodos} onItemClick={openFn} />
                 </>
             )}
         </div>
