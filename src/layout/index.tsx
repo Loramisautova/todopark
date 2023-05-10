@@ -45,7 +45,9 @@ export const TodoLayout: React.FC = () => {
                     </div>
                 </Layout.Content>
             </Layout>
-            <Layout.Footer style={{ textAlign: 'center' }}>TodoPark ©2023 Created with ❤️ by Lora Misautova</Layout.Footer>
+            <Layout.Footer style={{ textAlign: 'center' }}>
+                TodoPark ©2023 Created with ❤️ by Lora Misautova
+            </Layout.Footer>
         </>
     );
 };

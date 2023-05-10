@@ -6,10 +6,11 @@ import { TodoItem } from '../TodoItem';
 
 type Props = {
     todos: TTodoItem[];
+    onItemClick?: (id: string) => void;
     // onEditTask?: (id: string, newTask: string) => void;
 };
 
-export const TodoList: React.FC<Props> = ({ todos }) => {
+export const TodoList: React.FC<Props> = ({ todos, onItemClick }) => {
     // Id редактируемого элемента
     const [editItemId, setEditItemId] = useState<string>();
 
@@ -29,6 +30,7 @@ export const TodoList: React.FC<Props> = ({ todos }) => {
                     key={todo.id}
                     item={todo}
                     isEditMode={editItemId === todo.id}
+                    onClick={onItemClick}
                     onEditToggle={handleItemEditToggle}
                 />
             )}
