@@ -2,8 +2,9 @@ import { InboxOutlined, CheckOutlined, AlignLeftOutlined } from '@ant-design/ico
 import { Divider, Layout, Modal, Typography, Button } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import { APP_ROUTES } from '../../router/routes';
 import { useRootStore } from '../../store/rootStore';
 import { TodoEditCard } from '../TodoEditCard';
 
@@ -19,16 +20,16 @@ import styles from './styles.module.scss';
 export const TodoItemCard: React.FC = () => {
     const { todos } = useRootStore();
     const { id } = useParams();
-    // const location = useLocation();
-    // const myState = location.state;
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const [isEdit, setIsEdit] = useState<boolean>(false);
 
-    // console.log('##############');
-    // console.log('myState', myState.referrer);
-    // console.log('##############');
-
     const itemEdit = todos?.find(element => element.id === id);
+
+    const handleClose = () => {
+        navigate(location.state?.returnTo || APP_ROUTES.root.path);
+    }
 
     const handleContentButtonClick = () => {
         setIsEdit(true);
@@ -45,7 +46,7 @@ export const TodoItemCard: React.FC = () => {
         <Modal
             className={styles.card}
             visible={true}
-            // onCancel={handleCancel}
+            onCancel={handleClose}
             style={{ margin: 'auto' }}
             footer={null}
         >

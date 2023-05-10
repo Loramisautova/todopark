@@ -15,18 +15,25 @@ export const appRouter = createBrowserRouter([
         // errorElement: <ErrorPage />,
         children: [
             {
-                path: APP_ROUTES.default.path,
+                path: APP_ROUTES.root.path,
                 element: <MainPage />,
+                children: [
+                    {
+                        path: APP_ROUTES.root.todo.path,
+                        element: <TodoItemCard />,
+                    },
+                ],
             },
             {
                 path: APP_ROUTES.inbox.path,
                 element: <InboxPage />,
+                children: [
+                    {
+                        path: APP_ROUTES.inbox.todo.path,
+                        element: <TodoItemCard />,
+                    },
+                ],
             },
         ],
-
-    },
-    {
-        path: APP_ROUTES.todo.path,
-        element: <TodoItemCard />,
     },
 ]);

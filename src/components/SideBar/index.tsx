@@ -14,9 +14,9 @@ const menuItems = [
         label: <Link to={APP_ROUTES.inbox.path}>Inbox</Link>,
     },
     {
-        key: APP_ROUTES.default.path,
+        key: APP_ROUTES.root.path,
         icon: <CarryOutOutlined />,
-        label: <Link to={APP_ROUTES.default.path}>Today</Link>,
+        label: <Link to={APP_ROUTES.root.path}>Today</Link>,
     },
     {
         key: APP_ROUTES.upcoming.path,

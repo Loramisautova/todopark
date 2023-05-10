@@ -1,18 +1,17 @@
-type AppRoute = {
-    path: string;
-};
-
-export const APP_ROUTES: Record<string, AppRoute> = {
-    default: {
+export const APP_ROUTES = {
+    root: {
         path: '/',
+        todo: {
+            path: '/todos/:id'
+        },
     },
     inbox: {
         path: '/inbox',
+        todo: {
+            path: ':id'
+        },
     },
     upcoming: {
         path: '/upcoming',
     },
-    todo: {
-        path: 'todo/:id'
-    },
-};
+} as const;

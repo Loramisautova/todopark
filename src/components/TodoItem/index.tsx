@@ -3,7 +3,6 @@ import { Button, List, Typography } from 'antd';
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { DATE_SHORT_REVERTED_FORMAT } from '../../consts/formats';
 import { useRootStore } from '../../store/rootStore';
@@ -18,21 +17,18 @@ type Props = {
     item: TTodoItem;
     isEditMode?: boolean;
     onEditToggle?: (id: string) => void;
+    onClick?: (id: string) => void;
     onCalendarClick?: (value: boolean) => void;
 };
 
 /**
  * @DEPRECATED
  */
-export const TodoItem: React.FC<Props> = ({ item, isEditMode,  onEditToggle }) => {
+export const TodoItem: React.FC<Props> = ({ item, isEditMode,  onClick, onEditToggle }) => {
     const { id, task, dueDate, isDone } = item;
 
     const { onEditTodo } = useRootStore();
-    const location = useLocation();
-    const navigate = useNavigate();
-
     const [isChecked, setIsChecked] = useState(isDone);
-    const [referrer,] = useState(location.pathname);
 
     useEffect(() => {
         debouncedEdit();
@@ -48,14 +44,9 @@ export const TodoItem: React.FC<Props> = ({ item, isEditMode,  onEditToggle }) =
         500,
     );
 
-    const handleModalClick = () => {
-        // const navigate = useNavigate();
-        navigate(`/todo/${id}`, { state: {referrer: referrer} });
+    const handleClick = () => {
+        onClick?.(id);
     }
-
-    // const handleModalCancel = () => {
-    //     setModalVisible(false);
-    // }
 
     const handleEdit = () => {
         // передаем id редактированного элемента
@@ -70,7 +61,7 @@ export const TodoItem: React.FC<Props> = ({ item, isEditMode,  onEditToggle }) =
         <>
             {!isEditMode && (
                 <List.Item className={styles.item} >
-                    <div role="button" className={styles.itemContainer} onClick={handleModalClick}>
+                    <div role="button" className={styles.itemContainer} onClick={handleClick}>
                         <Button
                             className={classNames(styles.circle, { [styles.checked]: isChecked })}
                             role="checkbox"
